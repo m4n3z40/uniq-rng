@@ -48,7 +48,7 @@ const [numberA, numberB] = integers(2);
 
 ## API
 
-### ```integers([size=Infinity], [start=0], [end=Infinity])```
+### ```integers([size=Infinity], [start=0], [end=DEFAULT_INTEGER_END])```
 
 Creates an ```iterable``` that generates unique (for this instance) random integer number values.
 
@@ -64,7 +64,7 @@ Creates an ```iterable``` that generates unique (for this instance) random integ
 
 ---
 
-### ```reals([size=Infinity], [start=0], [end=Infinity])```
+### ```reals([size=Infinity], [start=0], [end=DEFAULT_REAL_END])```
 
 Creates an ```iterable``` that generates unique (for this instance) random real number values.
 
@@ -127,13 +127,13 @@ Creates an ```iterable``` that generates unique (for this instance) random date 
 
 ---
 
-### ```fromIterable(origin, [size=origin.length], [sliceStart=0])```
+### ```fromIterable(source, [size=source.length], [sliceStart=0])```
 
 Creates an ```iterable``` that pulls values randomly from another ```iterable```.
 
 #### Arguments
-1. ```origin``` \(Iterable\<any\>\):
-2. ```[size=origin.length]``` (number): The size of the iterator (total amount of objects that can be generated).
+1. ```source``` \(Iterable\<any\>\):
+2. ```[size=source.length]``` (number): The size of the iterator (total amount of objects that can be generated).
 3. ```[sliceStart=0]``` (number): Start pulling values from this position of the ```origin```.
 
 #### Returns
