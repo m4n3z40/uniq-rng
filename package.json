@@ -9,7 +9,7 @@
     "lint:test": "eslint ./test --cache",
     "test": "tape -r babel-register -r babel-polyfill 'test/**/*.js' | tap-spec",
     "test:watch": "tape-watch -r babel-register -r babel-polyfill -p tap-spec 'test/**/*.js' 'test/*.js'",
-    "build": "babel src -d lib",
+    "build": "BABEL_ENV=production babel src -d lib",
     "git:add-built-files": "git add ./lib"
   },
   "pre-commit": [
