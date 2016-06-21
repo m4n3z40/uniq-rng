@@ -1,8 +1,15 @@
 import test from 'tape';
 import nativeMathInteger from '../../../src/base/engines/nativeMathInteger';
 
-function generateRandomList(engine, size, options) {
-    return new Array(size).map(() => engine.getNext(options));
+function randomArray(engine, size, options) {
+    return Array.from(new Array(size)).map(() => engine.getNext(options));
+}
+
+function isInteger(number) {
+    return (
+        typeof number === 'number' &&
+        number === parseInt(number, 10)
+    );
 }
 
 test('base/engines/nativeMathInteger', t => {
@@ -43,36 +50,27 @@ test('base/engines/nativeMathInteger instance\'s .getNext() method', t => {
     t.plan(4);
 
     const integers = nativeMathInteger();
-    const rdmInt = integers.getNext();
 
-    t.equal(
-        rdmInt,
-        parseInt(rdmInt, 10),
-        'returns an integer number'
-    );
+    t.true(isInteger(integers.getNext()), 'returns an integer');
 
-    const rdmIntAbove499 = generateRandomList(integers, 200, { start: 500 });
+    const intAbove499 = randomArray(integers, 200, { start: 500 });
 
     t.true(
-        rdmIntAbove499.every(num => num > 499),
+        intAbove499.every(num => isInteger(num) && num > 499),
         'supports a \'start\' option so no value lower than \'start\' is generated'
     );
 
-    const rdmIntBelow100 = generateRandomList(integers, 200, { end: 99 });
+    const intBelow100 = randomArray(integers, 200, { end: 99 });
 
     t.true(
-        rdmIntBelow100.every(num => num < 100),
+        intBelow100.every(num => isInteger(num) && num < 100),
         'supports a \'end\' option so no value higher than \'end\' is generated'
     );
 
-    const rdmIntBetween99and199 = generateRandomList(
-        integers,
-        200,
-        { start: 100, end: 199 }
-    );
+    const intRange99to199 = randomArray(integers, 200, { start: 100, end: 199 });
 
     t.true(
-        rdmIntBetween99and199.every(num => num > 99 && num < 200),
+        intRange99to199.every(num => isInteger(num) && num > 99 && num < 200),
         'support both \'start\' and \'end\' options for specifying a range'
     );
 });
@@ -81,11 +79,11 @@ test('base/engines/nativeMathInteger instance\'s .getIdentity() method', t => {
     t.plan(1);
 
     const integers = nativeMathInteger();
-    const rdmInt = integers.getNext();
+    const int = integers.getNext();
 
     t.equal(
-        integers.getIdentity(rdmInt),
-        rdmInt,
+        integers.getIdentity(int),
+        int,
         'returns a valid identifier'
     );
 });
