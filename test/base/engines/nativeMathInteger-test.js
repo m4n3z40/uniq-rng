@@ -5,74 +5,87 @@ function generateRandomList(engine, size, options) {
     return new Array(size).map(() => engine.getNext(options));
 }
 
-test('nativeMathInteger engine module', t => {
+test('base/engines/nativeMathInteger', t => {
     t.plan(1);
 
-    t.ok(
-        typeof nativeMathInteger === 'function',
+    t.equal(
+        typeof nativeMathInteger,
+        'function',
         'should export a factory function'
     );
 });
 
-test('nativeMathInteger engine factory', t => {
-    t.plan(2);
+test('base/engines/nativeMathInteger factory', t => {
+    t.plan(3);
 
     const integers = nativeMathInteger();
 
-    t.ok(
-        typeof integers === 'object',
+    t.equal(
+        typeof integers,
+        'object',
         'returns a new object'
     );
 
-    t.ok(
-        typeof integers.getNext === 'function' &&
-        typeof integers.getIdentity === 'function',
-        'object returned is an instance of \'Engine interface\''
+    t.equal(
+        typeof integers.getNext,
+        'function',
+        'object returned has a .getNext() method'
+    );
+
+    t.equal(
+        typeof integers.getIdentity,
+        'function',
+        'object returned has a .getIdentity() method'
     );
 });
 
-test('nativeMathInteger engine instance\'s \'getNext\' method', t => {
+test('base/engines/nativeMathInteger instance\'s .getNext() method', t => {
     t.plan(4);
 
     const integers = nativeMathInteger();
     const rdmInt = integers.getNext();
 
-    t.ok(
-        typeof rdmInt === 'number' &&
-        rdmInt === parseInt(rdmInt, 10),
+    t.equal(
+        rdmInt,
+        parseInt(rdmInt, 10),
         'returns an integer number'
     );
 
     const rdmIntAbove499 = generateRandomList(integers, 200, { start: 500 });
 
-    t.ok(
+    t.true(
         rdmIntAbove499.every(num => num > 499),
-        'supports a \'start\' option so that no value lower than \'start\' is generated'
+        'supports a \'start\' option so no value lower than \'start\' is generated'
     );
 
     const rdmIntBelow100 = generateRandomList(integers, 200, { end: 99 });
 
-    t.ok(
+    t.true(
         rdmIntBelow100.every(num => num < 100),
-        'supports a \'end\' option so that no value higher than \'end\' is generated'
+        'supports a \'end\' option so no value higher than \'end\' is generated'
     );
 
-    const rdmIntBetween99and199 = generateRandomList(integers, 200, { start: 100, end: 199 });
+    const rdmIntBetween99and199 = generateRandomList(
+        integers,
+        200,
+        { start: 100, end: 199 }
+    );
 
-    t.ok(
+    t.true(
         rdmIntBetween99and199.every(num => num > 99 && num < 200),
-        'supports both \'start\' and \'end\' options for specifying a range'
+        'support both \'start\' and \'end\' options for specifying a range'
     );
 });
 
-test('nativeMathInteger engine instance\'s \'getIdentity\' method', t => {
+test('base/engines/nativeMathInteger instance\'s .getIdentity() method', t => {
     t.plan(1);
 
     const integers = nativeMathInteger();
     const rdmInt = integers.getNext();
 
-    t.ok(
-        integers.getIdentity(rdmInt) === rdmInt,
+    t.equal(
+        integers.getIdentity(rdmInt),
+        rdmInt,
         'returns a valid identifier'
     );
 });

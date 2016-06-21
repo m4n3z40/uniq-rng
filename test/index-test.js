@@ -1,41 +1,48 @@
 import test from 'tape';
 import * as uniqRNG from '../src';
 
-test('uniqRNG module', t => {
+test('index', t => {
     t.plan(7);
 
-    t.ok(
-        typeof uniqRNG.integers === 'function',
-        'exports the integer function'
+    t.equal(
+        typeof uniqRNG.integers,
+        'function',
+        'exports the .integers() function'
     );
 
-    t.ok(
-        typeof uniqRNG.reals === 'function',
-        'exports the reals function'
+    t.equal(
+        typeof uniqRNG.reals,
+        'function',
+        'exports the .reals() function'
     );
 
-    t.ok(
-        typeof uniqRNG.strings === 'function',
-        'exports the strings function'
+    t.equal(
+        typeof uniqRNG.strings,
+        'function',
+        'exports the .strings() function'
     );
 
-    t.ok(
-        typeof uniqRNG.hexes === 'function',
-        'exports the hexes function'
+    t.equal(
+        typeof uniqRNG.hexes,
+        'function',
+        'exports the .hexes() function'
     );
 
-    t.ok(
-        typeof uniqRNG.dates === 'function',
-        'exports the dates function'
+    t.equal(
+        typeof uniqRNG.dates,
+        'function',
+        'exports the .dates() function'
     );
 
-    t.ok(
-        typeof uniqRNG.fromIterable === 'function',
-        'exports the fromIterable function'
+    t.equal(
+        typeof uniqRNG.fromIterable,
+        'function',
+        'exports the .fromIterable() function'
     );
 
-    t.ok(
-        typeof uniqRNG.strings.pools === 'object',
-        'exports the strings pools object'
+    t.equal(
+        typeof uniqRNG.strings.pools,
+        'object',
+        'exports the .strings.pools object'
     );
 });
