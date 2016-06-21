@@ -43,24 +43,24 @@ test('[base/engines/nativeMathArbitrary] instance\'s .getNext() method', t => {
 
     t.true(isDecimal(decimals.getNext()), 'returns a decimal number');
 
-    const intAbove499 = randomArray(decimals, 200, { start: 500 });
+    const decAbove499 = randomArray(decimals, 200, { start: 500 });
 
     t.true(
-        intAbove499.every(num => isDecimal(num) && num > 499),
+        decAbove499.every(num => isDecimal(num) && num > 499),
         'supports a \'start\' option so no value lower than \'start\' is generated'
     );
 
-    const intBelow100 = randomArray(decimals, 200, { end: 99 });
+    const decBelow100 = randomArray(decimals, 200, { end: 99 });
 
     t.true(
-        intBelow100.every(num => isDecimal(num) && num < 100),
+        decBelow100.every(num => isDecimal(num) && num < 100),
         'supports a \'end\' option so no value higher than \'end\' is generated'
     );
 
-    const intRange99to199 = randomArray(decimals, 200, { start: 100, end: 199 });
+    const decRange99to199 = randomArray(decimals, 200, { start: 100, end: 199 });
 
     t.true(
-        intRange99to199.every(num => isDecimal(num) && num > 99 && num < 200),
+        decRange99to199.every(num => isDecimal(num) && num > 99 && num < 200),
         'support both \'start\' and \'end\' options for specifying a range'
     );
 });
@@ -69,11 +69,11 @@ test('[base/engines/nativeMathArbitrary] instance\'s .getIdentity() method', t =
     t.plan(1);
 
     const decimals = nativeMathArbitrary();
-    const int = decimals.getNext();
+    const dec = decimals.getNext();
 
     t.equal(
-        decimals.getIdentity(int),
-        int,
+        decimals.getIdentity(dec),
+        dec,
         'returns a valid identifier'
     );
 });
