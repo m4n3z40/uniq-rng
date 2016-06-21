@@ -46,7 +46,8 @@ test('[base/engines/nativeMathArbitrary] instance\'s .getNext() method', t => {
     const decAbove499 = randomArray(decimals, 200, { start: 500 });
 
     t.true(
-        decAbove499.every(num => isDecimal(num) && num > 499),
+        decAbove499.every(num => isDecimal(num) && num > 499) &&
+        decAbove499.some(num => Math.floor(num) !== 500),
         'supports a \'start\' option so no value lower than \'start\' is generated'
     );
 

@@ -46,7 +46,8 @@ test('[base/engines/nativeMathInteger] instance\'s .getNext() method', t => {
     const intAbove499 = randomArray(integers, 200, { start: 500 });
 
     t.true(
-        intAbove499.every(num => isInteger(num) && num > 499),
+        intAbove499.every(num => isInteger(num) && num > 499) &&
+        intAbove499.some(num => num !== 500),
         'supports a \'start\' option so no value lower than \'start\' is generated'
     );
 
