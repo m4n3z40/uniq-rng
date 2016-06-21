@@ -1,9 +1,16 @@
-const DEFAULT_ARBITRARY_START = 0;
-const DEFAULT_ARBITRARY_END = (Number.MAX_SAFE_INTEGER || 9007199254740991) - 1;
+const { random } = Math;
 
 const protoMathArbitrary = {
-    getNext({ start = DEFAULT_ARBITRARY_START, end = DEFAULT_ARBITRARY_END } = {}) {
-        return Math.random() * (end - start) + start;
+    getNext({ start, end } = {}) {
+        if (start && end) {
+            return (random() * (end - start)) + start;
+        }
+
+        if (start) {
+            return random() + start;
+        }
+
+        return random() * (end || 1);
     },
     getIdentity(value) {
         return value;

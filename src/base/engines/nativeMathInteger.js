@@ -1,9 +1,16 @@
-const DEFAULT_INTEGER_START = 0;
-const DEFAULT_INTEGER_END = Number.MAX_SAFE_INTEGER || 9007199254740991;
+const { floor, random } = Math;
 
 const protoMathInteger = {
-    getNext({ start = DEFAULT_INTEGER_START, end = DEFAULT_INTEGER_END } = {}) {
-        return Math.floor(Math.random() * (end - start + 1) + start);
+    getNext({ start, end } = {}) {
+        if (start && end) {
+            return floor(random() * (end - start + 1) + start);
+        }
+
+        if (start) {
+            return floor(random() + start);
+        }
+
+        return floor(random() * (end ? end + 1 : 10));
     },
     getIdentity(value) {
         return value;

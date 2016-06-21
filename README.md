@@ -9,7 +9,7 @@ Generates an iterable that iterates through a list of unique random values, mean
 
 Creating a list of unique integers
 
-```js
+```javascript
 import { integers } from 'uniq-rng';
 
 // By a infinite generator
@@ -48,15 +48,15 @@ const [numberA, numberB] = integers(2);
 
 ## API
 
-### ```integers([size=Infinity], [start=0], [end=DEFAULT_INTEGER_END])```
+### ```integers([size=Infinity], [start], [end])```
 
 Creates an ```iterable``` that generates unique (for this instance) random integer number values.
 
 #### Arguments
 
 1. ```[size=Infinity]``` (number): The size of the iterator (total amount of values that can be generated).
-2. ```[start=0]``` (number): The minimum value that a generated random integer can have.
-3. ```[end=Infinity]``` (number): The maximum value that a generated random integer can have.
+2. ```[start]``` (number): The minimum value that a generated random integer can have.
+3. ```[end]``` (number): The maximum value that a generated random integer can have.
 
 #### Returns
 
@@ -64,15 +64,15 @@ Creates an ```iterable``` that generates unique (for this instance) random integ
 
 ---
 
-### ```reals([size=Infinity], [start=0], [end=DEFAULT_REAL_END])```
+### ```decimals([size=Infinity], [start], [end])```
 
 Creates an ```iterable``` that generates unique (for this instance) random real number values.
 
 #### Arguments
 
 1. ```[size=Infinity]``` (number): The size of the iterator (total amount of values that can be generated).
-2. ```[start=0]``` (number): The minimum value that a generated random real number can have.
-3. ```[end=Infinity]``` (number): The maximum value that a generated random real number can have.
+2. ```[start]``` (number): The minimum value that a generated random real number can have.
+3. ```[end]``` (number): The maximum value that a generated random real number can have.
 
 #### Returns
 

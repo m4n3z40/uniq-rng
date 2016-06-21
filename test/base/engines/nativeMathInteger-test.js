@@ -1,18 +1,8 @@
 import test from 'tape';
 import nativeMathInteger from '../../../src/base/engines/nativeMathInteger';
+import { isInteger, randomArray } from '../../support/helpers';
 
-function randomArray(engine, size, options) {
-    return Array.from(new Array(size)).map(() => engine.getNext(options));
-}
-
-function isInteger(number) {
-    return (
-        typeof number === 'number' &&
-        number === parseInt(number, 10)
-    );
-}
-
-test('base/engines/nativeMathInteger', t => {
+test('[base/engines/nativeMathInteger]', t => {
     t.plan(1);
 
     t.equal(
@@ -22,7 +12,7 @@ test('base/engines/nativeMathInteger', t => {
     );
 });
 
-test('base/engines/nativeMathInteger factory', t => {
+test('[base/engines/nativeMathInteger] factory', t => {
     t.plan(3);
 
     const integers = nativeMathInteger();
@@ -46,7 +36,7 @@ test('base/engines/nativeMathInteger factory', t => {
     );
 });
 
-test('base/engines/nativeMathInteger instance\'s .getNext() method', t => {
+test('[base/engines/nativeMathInteger] instance\'s .getNext() method', t => {
     t.plan(4);
 
     const integers = nativeMathInteger();
@@ -75,7 +65,7 @@ test('base/engines/nativeMathInteger instance\'s .getNext() method', t => {
     );
 });
 
-test('base/engines/nativeMathInteger instance\'s .getIdentity() method', t => {
+test('[base/engines/nativeMathInteger] instance\'s .getIdentity() method', t => {
     t.plan(1);
 
     const integers = nativeMathInteger();

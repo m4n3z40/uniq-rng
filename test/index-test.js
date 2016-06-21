@@ -1,7 +1,7 @@
 import test from 'tape';
 import * as uniqRNG from '../src';
 
-test('index', t => {
+test('[index]', t => {
     t.plan(7);
 
     t.equal(
@@ -11,9 +11,9 @@ test('index', t => {
     );
 
     t.equal(
-        typeof uniqRNG.reals,
+        typeof uniqRNG.decimals,
         'function',
-        'exports the .reals() function'
+        'exports the .decimals() function'
     );
 
     t.equal(
