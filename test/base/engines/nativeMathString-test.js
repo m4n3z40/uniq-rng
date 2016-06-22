@@ -52,10 +52,12 @@ test('[base/engines/nativeMathString] instance\'s .getNext() method', t => {
         'supports changing the default length by passing a \'length\' option'
     );
 
+    const customPoolStr = strings.getNext({ pool: 'abcdef' });
+
     t.true(
-        !(/[\d]+/g.test(strings.getNext({ pool: 'abcdef' }))) &&
-        !(/[g-zA-Z]+/g.test(strings.getNext({ pool: 'abcdef' }))) &&
-        /^[a-f]+$/g.test(strings.getNext({ pool: 'abcdef' })),
+        !(/[\d]+/g.test(customPoolStr)) &&
+        !(/[g-zA-Z]+/g.test(customPoolStr)) &&
+        /^[a-f]+$/g.test(customPoolStr),
         'supports changing the default pool of charaters by passing a \'pool\' option'
     );
 
