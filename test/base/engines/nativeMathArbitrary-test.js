@@ -2,7 +2,7 @@ import test from 'tape';
 import nativeMathArbitrary from '../../../src/base/engines/nativeMathArbitrary';
 import { isDecimal, randomArray } from '../../support/helpers';
 
-test('[base/engines/nativeMathArbitrary]', t => {
+test('[base/engines/nativeMathArbitrary] module', t => {
     t.plan(1);
 
     t.equal(

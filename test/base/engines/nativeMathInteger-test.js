@@ -2,7 +2,7 @@ import test from 'tape';
 import nativeMathInteger from '../../../src/base/engines/nativeMathInteger';
 import { isInteger, randomArray } from '../../support/helpers';
 
-test('[base/engines/nativeMathInteger]', t => {
+test('[base/engines/nativeMathInteger] module', t => {
     t.plan(1);
 
     t.equal(

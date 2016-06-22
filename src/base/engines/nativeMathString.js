@@ -8,7 +8,7 @@ const protoMathString = {
         const nextIntOpts = { start: 0, end: pool.length - 1 };
         let str = '';
 
-        while (str.length <= length) {
+        while (str.length < length) {
             str += pool.charAt(integers.getNext(nextIntOpts));
         }
 
