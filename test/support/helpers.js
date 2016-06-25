@@ -28,3 +28,11 @@ export function isInteger(number) {
 export function isDecimal(number) {
     return (typeof number === 'number') && (number % 1 !== 0);
 }
+
+export function isDate(object) {
+    return (
+        (typeof object === 'object') &&
+        (object instanceof Date) &&
+        (object.toString() !== 'Invalid Date')
+    );
+}
