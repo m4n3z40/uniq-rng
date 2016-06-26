@@ -1,43 +1,31 @@
 import nativeMathInteger from './nativeMathInteger';
 
-const REMAINING_VALUES = Symbol();
-
 const integers = nativeMathInteger();
 const protoMathPicker = {
-    getNext() {
-        const remainingValues = this[REMAINING_VALUES];
-        const length = remainingValues.length;
-        let index = 0;
-        let value;
+    getNext({ source = [] } = {}) {
+        const srcArray = Array.from(source);
+        const length = source.length;
 
         if (length === 0) {
-            throw new Error('No values left in the source iterable.');
+            return undefined;
         }
 
         if (length === 1) {
-            value = remainingValues[index];
-        } else {
-            index = integers.getNext({
-                start: 0,
-                end: length - 1
-            });
-
-            value = remainingValues[index];
+            return srcArray[0];
         }
 
-        remainingValues.splice(index, 1);
+        const index = integers.getNext({
+            start: 0,
+            end: length - 1
+        });
 
-        return value;
+        return srcArray[index];
     },
     getIdentity(value) {
         return value;
     }
 };
 
-export default function createMathPicker({ source, sliceStart = 0 } = {}) {
-    const pickerEngine = Object.create(protoMathPicker);
-
-    pickerEngine[REMAINING_VALUES] = Array.from(source).slice(sliceStart);
-
-    return pickerEngine;
+export default function createMathPicker() {
+    return Object.create(protoMathPicker);
 }
