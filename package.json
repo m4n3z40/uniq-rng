@@ -9,7 +9,7 @@
     "lint:test": "eslint ./test --cache",
     "test": "tape -r babel-register -r babel-polyfill 'test/**/*-test.js' | faucet",
     "test:watch": "chokidar 'test/**/*-test.js' -c 'npm test'",
-    "build": "BABEL_ENV=production babel src -d lib",
+    "build": "rm -rf lib && BABEL_ENV=production babel src -d lib",
     "git:add-built-files": "git add ./lib"
   },
   "pre-commit": [
