@@ -23,6 +23,12 @@ test('[index]', t => {
     );
 
     t.equal(
+        typeof uniqRNG.strings.pools,
+        'object',
+        'exports the .strings.pools object'
+    );
+
+    t.equal(
         typeof uniqRNG.hexes,
         'function',
         'exports the .hexes() function'
@@ -38,11 +44,5 @@ test('[index]', t => {
         typeof uniqRNG.fromIterable,
         'function',
         'exports the .fromIterable() function'
-    );
-
-    t.equal(
-        typeof uniqRNG.strings.pools,
-        'object',
-        'exports the .strings.pools object'
     );
 });

@@ -14,7 +14,7 @@ import { integers } from 'uniq-rng';
 
 // By a infinite generator
 const randomNumbers = [];
-const iter = integers();
+const iter = integers().getIterator();
 
 do {
     randomNumbers.push(iter.next().value);
@@ -31,6 +31,10 @@ for (let value of integers(10)) {
 }
 
 console.log(randomNumbers);
+// => [344, 234, 254356, 23423, 234325, 2455, 345345, 2323246,768768, 676723]
+
+// OR by using .toArray()
+const randomNumbers = integers(10).toArray();
 // => [344, 234, 254356, 23423, 234325, 2455, 345345, 2323246,768768, 676723]
 
 // OR by using ES2015's Array.from()
@@ -127,14 +131,13 @@ Creates an ```iterable``` that generates unique (for this instance) random date 
 
 ---
 
-### ```fromIterable(source, [size=source.length], [sliceStart=0])```
+### ```fromIterable(source, [size=source.length])```
 
 Creates an ```iterable``` that pulls values randomly from another ```iterable```.
 
 #### Arguments
 1. ```source``` \(Iterable\<any\>\):
 2. ```[size=source.length]``` (number): The size of the iterator (total amount of objects that can be generated).
-3. ```[sliceStart=0]``` (number): Start pulling values from this position of the ```origin```.
 
 #### Returns
 
