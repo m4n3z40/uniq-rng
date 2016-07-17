@@ -20,3 +20,5 @@ export const pools = {
 export default function strings(size, length, pool = ALL_ALPHA_NUM) {
     return uniqueGenerator(nativeMathString)(size, { length, pool });
 }
+
+strings.pools = pools;

@@ -15,6 +15,20 @@ function createEngineStub() {
     return sinon.spy(() => fakeEngine);
 }
 
+function stubEngineMethodCalls(engine, expectedValues) {
+    expectedValues.forEach((value, idx) => {
+        engine.getNext.onCall(idx).returns(value);
+        engine.getIdentity.onCall(idx).returns(value);
+    });
+}
+
+function createIterable(size, options) {
+    const fakeEngine = createEngineStub();
+    const generator = uniqueGenerator(fakeEngine);
+
+    return generator(size, options);
+}
+
 test('[base/uniqueGenerator] module', t => {
     t.plan(1);
 
@@ -88,12 +102,11 @@ test('[base/uniqueGenerator] generator function', t => {
     );
 });
 
-test('[base/uniqueGenerator] iterable', t => {
+test('[base/uniqueGenerator] iterable object', t => {
+    t.plan(3);
+
     const SIZE = 20;
-    const fakeEngine = createEngineStub();
-    const fakeEngineInstance = fakeEngine();
-    const generator = uniqueGenerator(fakeEngine);
-    const iterable = generator(SIZE, { start: 10, end: 30 });
+    const iterable = createIterable(SIZE, { start: 10, end: 10 + SIZE });
 
     t.equal(
         typeof iterable[Symbol.iterator],
@@ -110,21 +123,69 @@ test('[base/uniqueGenerator] iterable', t => {
         'function',
         'should have a .toArray() method to turn the current iterable into an array'
     );
+});
 
-    range(SIZE).forEach(idx => {
-        const value = 10 + idx;
+test('[base/uniqueGenerator] iterable\'s iterator protocol compliance', t => {
+    t.plan(4);
 
-        fakeEngineInstance.getNext.onCall(idx).returns(value);
-        fakeEngineInstance.getIdentity.onCall(idx).returns(value);
-    });
+    const SIZE = 20;
+    const options = { start: 10, end: 10 + SIZE };
+    const iterable = createIterable(SIZE, options);
+    const expectedArray = range(options.start, options.end);
 
-    const expectedArray = [
-        10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-        20, 21, 22, 23, 24, 25, 26, 27, 28, 29
-    ];
+    t.equal(
+        typeof iterable[Symbol.iterator],
+        'function',
+        'should have a [Symbol.iterator]() method'
+    );
+
+    stubEngineMethodCalls(iterable.engine, expectedArray);
+
+    const actualArray = [...iterable];
+
+    t.equal(
+        iterable.engine.getNext.callCount,
+        SIZE,
+        'should consistently delegate the generation of values to the engine'
+    );
+    t.equal(
+        iterable.engine.getIdentity.callCount,
+        SIZE,
+        'should consistently delegate the generation of value ids to the engine'
+    );
+    t.deepEqual(
+        actualArray,
+        expectedArray,
+        'should generate an array of values through es6 spread'
+    );
+});
+
+test('[base/uniqueGenerator] iterable\'s .getIterator() mehod', t => {
+    t.plan(6);
+
+    const SIZE = 20;
+    const options = { start: 10, end: 10 + SIZE };
+    const iterable = createIterable(SIZE, options);
+    const expectedArray = range(options.start, options.end);
     const actualArray = [];
     const it = iterable.getIterator();
+
+    stubEngineMethodCalls(iterable.engine, expectedArray);
+
+    t.equal(typeof it.next, 'function', 'should return a JS iterator object');
+
     let currentItState = it.next();
+
+    t.equal(
+        typeof currentItState.value,
+        'number',
+        'iterator.next() should return an object with a .value property'
+    );
+    t.equal(
+        typeof currentItState.done,
+        'boolean',
+        'iterator.next() should return an object with a .done property'
+    );
 
     while (!currentItState.done) {
         actualArray.push(currentItState.value);
@@ -133,20 +194,47 @@ test('[base/uniqueGenerator] iterable', t => {
     }
 
     t.equal(
-        fakeEngineInstance.getNext.callCount,
+        iterable.engine.getNext.callCount,
         SIZE,
-        'should consistently delegate the generation of values to the engine'
+        'iterator should consistently delegate the generation of values to the engine'
     );
     t.equal(
-        fakeEngineInstance.getIdentity.callCount,
+        iterable.engine.getIdentity.callCount,
         SIZE,
-        'should consistently delegate the generation of values ids to the engine'
+        'iterator should consistently delegate the generation of value ids to the engine'
     );
     t.deepEqual(
         actualArray,
         expectedArray,
-        'should generate a list of values returned from the engine calls'
+        'iterator should generate a list of values returned from the engine calls'
     );
+});
 
-    t.end();
+test('[base/uniqueGenerator] iterable\'s .toArray() method', t => {
+    t.plan(3);
+
+    const SIZE = 20;
+    const options = { start: 10, end: 10 + SIZE };
+    const iterable = createIterable(SIZE, options);
+    const expectedArray = range(options.start, options.end);
+
+    stubEngineMethodCalls(iterable.engine, expectedArray);
+
+    const actualArray = iterable.toArray();
+
+    t.equal(
+        iterable.engine.getNext.callCount,
+        SIZE,
+        'should consistently delegate the generation of values to the engine'
+    );
+    t.equal(
+        iterable.engine.getIdentity.callCount,
+        SIZE,
+        'should consistently delegate the generation of value ids to the engine'
+    );
+    t.deepEqual(
+        actualArray,
+        expectedArray,
+        'should generate an array of values returned from the engine calls'
+    );
 });

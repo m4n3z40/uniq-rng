@@ -1,15 +1,6 @@
-import myIntegers from './integers';
-import myDecimals from './decimals';
-import myStrings, { pools as stringPools } from './strings';
-import myHexes from './hexes';
-import myDates from './dates';
-import myFromIterable from './fromIterable';
-
-myStrings.pools = stringPools;
-
-export const integers = myIntegers;
-export const decimals = myDecimals;
-export const strings = myStrings;
-export const hexes = myHexes;
-export const dates = myDates;
-export const fromIterable = myFromIterable;
+export { default as integers } from './integers';
+export { default as decimals } from './decimals';
+export { default as strings } from './strings';
+export { default as hexes } from './hexes';
+export { default as dates } from './dates';
+export { default as fromIterable } from './fromIterable';
